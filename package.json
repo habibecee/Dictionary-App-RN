@@ -9,19 +9,22 @@
     "pod": "cd ios && pod install && cd ..",
     "gradlew": "cd android && ./gradlew clean && cd ..",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "svgr": "svgr ./src/assets/icons -d ./src/companents/icons --native --icon --svg-props 'width=24,height=24,className='"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
+    "@svgr/cli": "^7.0.0",
     "react": "18.2.0",
     "react-native": "0.71.7",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-reanimated": "^3.1.0",
     "react-native-safe-area-context": "^4.5.1",
     "react-native-screens": "^3.20.0",
+    "react-native-svg": "^13.9.0",
     "react-native-vector-icons": "^9.2.0",
     "styled-components": "^5.3.10",
     "styled-system": "^5.1.5"

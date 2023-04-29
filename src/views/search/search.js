@@ -12,9 +12,6 @@ const Search = ({navigation}) => {
         title="Go to Details"
         onPress={() => navigation.navigate('Details')}
       />
-
-      <Box size={20} bg="blue" mt={20} />
-      <BookmarkIcon width={50} height={50} stroke="black" />
     </BoxCenter>
   );
 };

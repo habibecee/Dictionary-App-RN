@@ -53,10 +53,8 @@ function TabBar({state, descriptors, navigation}) {
             flexDirection="column"
             onPress={onPress}
             flex={1}>
-            {label === 'History' && <AnchorIcon stroke={theme.colors.gray} />}
-            {label === 'Favorite' && (
-              <BookmarkIcon stroke={theme.colors.gray} />
-            )}
+            {label === 'History' && <AnchorIcon color={theme.colors.gray} />}
+            {label === 'Favorite' && <BookmarkIcon color={theme.colors.gray} />}
             <Box size={3} bg={isFocused ? 'red' : '#ffffff00'} mt={6} />
           </Button>
         );

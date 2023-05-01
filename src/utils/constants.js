@@ -1,4 +1,4 @@
-const {StyleSheet} = require('react-native/types');
+const {StyleSheet} = require('react-native');
 
 export const colors = StyleSheet.create({});
 

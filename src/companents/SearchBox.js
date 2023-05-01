@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Text from './Text';
 import Box from './Box';
 import Input from './Input';
-import {SearchIcon} from './icons';
+import {Close, SearchIcon} from './icons';
 import theme from '../utils/theme';
 import {Keyboard, StyleSheet} from 'react-native';
 import Button from './Button';
 
 const SearchBox = props => {
   const [isFocus, setIsFocus] = useState(false);
+  const [value, setValue] = useState('');
+
+  //   useEffect(() => {
+  //     console.log(value)
+
+  //   },[value])
 
   const onCancel = () => {
     setIsFocus(false);
@@ -20,16 +26,33 @@ const SearchBox = props => {
     setIsFocus(true);
   };
 
+  const onClear = () => {
+    setValue('');
+  };
+
   return (
     <Box style={styles.container}>
-      <Input
-        placeholder="Search In Dictionary"
-        style={styles.input}
-        onFocus={() => setIsFocus(true)}
-      />
+      <Box style={styles.inputBox}>
+        <Input
+          //   clearButtonMode="always"
+          borderColor={isFocus ? theme.colors.inputFocusColor : 'transparent'}
+          width={isFocus ? '80%' : '100%'}
+          placeholder="Search In Dictionary"
+          style={styles.input}
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onChangeText={text => setValue(text)}
+        />
 
-      <Box style={styles.IconContainer}>
-        <SearchIcon color={theme.colors.textMedium} />
+        {value.length > 0 && (
+          <Button onPress={onClear} style={styles.CloseIcon}>
+            <Close right={isFocus ? 76 : 16} color={theme.colors.textDark} />
+          </Button>
+        )}
+
+        <Button style={styles.SearchIcon}>
+          <SearchIcon color={theme.colors.textMedium} />
+        </Button>
       </Box>
 
       {isFocus && (
@@ -43,27 +66,44 @@ const SearchBox = props => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
     flexDirektion: 'row',
     // alignItems: 'center',
     justifyContent: 'space-between',
   },
 
-  input: {
+  inputBox: {
+    position: 'relative',
     flex: 1,
-    position: 'absolute',
+  },
+
+  input: {
+    // position: 'absolute',
     color: theme.colors.textDark,
     paddingLeft: 52,
     height: 52,
     borderRadius: theme.radii.normal,
+    borderWidth: 1,
     backgroundColor: 'white',
     placeholderTextColor: theme.colors.textMedium,
-    minWidth: '100%',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 24,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
   },
-  IconContainer: {
+
+  CloseIcon: {
+    position: 'absolute',
+    right: 16,
+    top: 14,
+  },
+
+  SearchIcon: {
     position: 'absolute',
     left: 16,
-    top: 12,
+    top: 14,
   },
 
   button: {

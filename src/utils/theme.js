@@ -17,6 +17,7 @@ const colors = {
   textLight: '#758291',
 
   logoColor: '#B47F6F',
+  inputFocusColor: '#D1D1D1',
 };
 
 const radii = {

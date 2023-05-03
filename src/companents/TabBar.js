@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, SafeAreaView} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 import Button from './Button';
 import Box from './Box';
 import theme from '../utils/theme';
@@ -9,7 +15,7 @@ import {BookmarkIcon} from './icons';
 
 function TabBar({state, descriptors, navigation}) {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <Box style={styles.View}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const label =
@@ -53,14 +59,40 @@ function TabBar({state, descriptors, navigation}) {
             flexDirection="column"
             onPress={onPress}
             flex={1}>
-            {label === 'History' && <AnchorIcon color={theme.colors.gray} />}
-            {label === 'Favorite' && <BookmarkIcon color={theme.colors.gray} />}
-            <Box size={3} bg={isFocused ? 'red' : '#ffffff00'} mt={6} />
+            {label === 'History' && (
+              <AnchorIcon
+                color={isFocused ? theme.colors.red : theme.colors.gray}
+              />
+            )}
+            {label === 'Favorite' && (
+              <BookmarkIcon
+                color={isFocused ? theme.colors.red : theme.colors.gray}
+              />
+            )}
+
+            {/* INDICATOR */}
+            <Box
+              size={4}
+              bg={isFocused ? theme.colors.red : theme.colors.transparentColor}
+              mt={6}
+              borderRadius="full"
+            />
           </Button>
         );
       })}
-    </View>
+    </Box>
   );
 }
+
+const styles = StyleSheet.create({
+  View: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOpacity: 0.16,
+    shadowRadius: 24,
+    paddingBottom: 20,
+  },
+});
 
 export default TabBar;

@@ -7,22 +7,20 @@ import theme from '../utils/theme';
 import {Keyboard, StyleSheet} from 'react-native';
 import Button from './Button';
 
-const SearchBox = props => {
+const SearchBox = ({onChangeFocus}) => {
   const [isFocus, setIsFocus] = useState(false);
   const [value, setValue] = useState('');
 
-  //   useEffect(() => {
-  //     console.log(value)
-
-  //   },[value])
+  React.useEffect(() => {
+    onChangeFocus(isFocus);
+  }, [isFocus, onChangeFocus]);
 
   const onCancel = () => {
     setIsFocus(false);
     Keyboard.dismiss();
   };
 
-  const onFocus = e => {
-    // console.log(e);
+  const onFocus = () => {
     setIsFocus(true);
   };
 
@@ -34,8 +32,12 @@ const SearchBox = props => {
     <Box style={styles.container}>
       <Box style={styles.inputBox}>
         <Input
-          //   clearButtonMode="always"
-          borderColor={isFocus ? theme.colors.inputFocusColor : 'transparent'}
+          // clearButtonMode="always"
+          borderColor={
+            isFocus
+              ? theme.colors.inputFocusColor
+              : theme.colors.transparentColor
+          }
           width={isFocus ? '80%' : '100%'}
           placeholder="Search In Dictionary"
           style={styles.input}
@@ -67,8 +69,7 @@ const SearchBox = props => {
 const styles = StyleSheet.create({
   container: {
     flexDirektion: 'row',
-    // alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 
   inputBox: {
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     placeholderTextColor: theme.colors.textMedium,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 24,
     shadowOffset: {
       width: 0,
@@ -107,9 +108,11 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginLeft: 320,
-    paddingVertical: 15,
-    height: 52,
+    textAlign: 'center',
+    marginLeft: 300,
+    // paddingVertical: 15,
+    // height: 52,
+    top: 15,
   },
 });
 

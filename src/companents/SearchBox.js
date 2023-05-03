@@ -69,8 +69,7 @@ const SearchBox = ({onChangeFocus}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirektion: 'row',
-    // alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 
   inputBox: {
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     placeholderTextColor: theme.colors.textMedium,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 24,
     shadowOffset: {
       width: 0,
@@ -109,10 +108,11 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginLeft: 320,
+    textAlign: 'center',
+    marginLeft: 300,
     // paddingVertical: 15,
     // height: 52,
-    top: 20,
+    top: 15,
   },
 });
 

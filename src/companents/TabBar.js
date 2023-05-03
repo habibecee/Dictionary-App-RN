@@ -41,12 +41,12 @@ function TabBar({state, descriptors, navigation}) {
         };
 
         return label === 'Search' ? (
-          <Box p={15} mt={-15} bg="white" borderRadius="full">
+          <Box p={15} mt={-15} bg={theme.colors.logoBg} borderRadius="full">
             <Button
               key={label}
               size={56}
               height={56}
-              bg="red"
+              bg={theme.colors.logoColor}
               borderRadius="full"
               onPress={onPress}>
               <SearchIcon stroke="white" />
@@ -86,7 +86,7 @@ function TabBar({state, descriptors, navigation}) {
 
 const styles = StyleSheet.create({
   View: {
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.logoBg,
     flexDirection: 'row',
     shadowColor: '#000',
     shadowOpacity: 0.16,

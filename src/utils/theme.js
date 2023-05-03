@@ -19,7 +19,7 @@ const colors = {
   logoColor: '#B47F6F',
   inputFocusColor: '#D1D1D1',
 
-  transparentColor: '#ffffff00',
+  transparentColor: '#00000000',
   logoBg: '#fdf1ef',
 };
 

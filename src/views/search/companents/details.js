@@ -3,6 +3,7 @@ import {Text, Platform, StatusBar, StyleSheet} from 'react-native';
 import Box from '../../../companents/Box';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
+import theme from '../../../utils/theme';
 
 const Details = () => {
   useFocusEffect(
@@ -24,6 +25,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: theme.colors.logoBg,
+    padding: 16,
   },
 });
 

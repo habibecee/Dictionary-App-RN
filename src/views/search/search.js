@@ -19,7 +19,8 @@ import bg from '../../assets/images/dictionary.png';
 import SearchBox from '../../companents/SearchBox';
 import Bg from '../../companents/Bg';
 import {CardSummary, CardTitle, CardContainer} from '../../companents/Card';
-import {GeneralStyles} from '../../utils/constants';
+import {GeneralStyles, fonts} from '../../utils/constants';
+import {SimpleCard, SimpleCardTitle} from '../../companents/SimpleCard';
 
 const DATA = [
   {
@@ -114,22 +115,30 @@ const Search = ({navigation}) => {
       <Box style={styles.midContainer} pt={isSearchFocused ? 0 : 26}>
         {isSearchFocused ? (
           <Box style={styles.container}>
-            <Text>History Search</Text>
-          </Box>
-        ) : (
-          <Box style={styles.container}>
-            {/* <FlatList
+            <FlatList
+              style={{padding: 6}}
               data={DATA}
               renderItem={({item}) => (
-                <Box py={5}>
-                  <CardContainer>
-                    <CardTitle>{item.title}</CardTitle>
-                    <CardSummary>{item.summary} </CardSummary>
-                  </CardContainer>
+                <Box py={6}>
+                  <SimpleCard>
+                    <SimpleCardTitle> {item.title} </SimpleCardTitle>
+                  </SimpleCard>
                 </Box>
               )}
               keyExtractor={item => item.id}
-            /> */}
+              ListHeaderComponent={
+                <Text
+                  style={[
+                    GeneralStyles.fontRegular,
+                    {color: theme.colors.textMedium, marginBottom: 10},
+                  ]}>
+                  Last Searches
+                </Text>
+              }
+            />
+          </Box>
+        ) : (
+          <Box style={styles.container}>
             <Box>
               <Text
                 style={[

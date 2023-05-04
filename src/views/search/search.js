@@ -1,41 +1,80 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Platform,
-  Button,
-  ImageBackground,
   StatusBar,
   StyleSheet,
   Animated,
+  FlatList,
+  ImageBackground,
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import {useFocusEffect} from '@react-navigation/native';
 
-import Box from '../../companents/Box';
-import {Logo} from '../../companents/icons';
-import SearchBox from '../../companents/SearchBox';
 import theme from '../../utils/theme';
+
+import Box from '../../companents/Box';
+import Text from '../../companents/Text';
+import {Logo} from '../../companents/icons';
 import bg from '../../assets/images/dictionary.png';
-import {Text} from 'react-native-svg';
+import SearchBox from '../../companents/SearchBox';
+import Bg from '../../companents/Bg';
+import {CardSummary, CardTitle, CardContainer} from '../../companents/Card';
+import {GeneralStyles} from '../../utils/constants';
+
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+    summary: 'First Summary',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+    summary: 'Second Summary',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+    summary: 'Second Summary',
+  },
+];
 
 const Search = ({navigation}) => {
+  const heroHeight = new Animated.Value(285);
+  const bgOpacity = new Animated.Value(1);
   const [isSearchFocused, setSearchFocused] = useState(false);
-  const heroHeight = useRef(new Animated.Value(285)).current;
 
   useEffect(() => {
     if (isSearchFocused) {
-      Animated.timing(heroHeight, {
+      // bgOpacity
+      Animated.timing(bgOpacity, {
         toValue: 0,
-        duration: 5000,
-        useNativeDriver: true,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
+
+      // heroHeight
+      Animated.timing(heroHeight, {
+        toValue: 10,
+        duration: 500,
+        useNativeDriver: false,
       }).start();
     } else {
+      // bgOpacity
+      Animated.timing(bgOpacity, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
+
+      // heroHeight
       Animated.timing(heroHeight, {
         toValue: 285,
-        duration: 5000,
-        useNativeDriver: true,
+        duration: 500,
+        useNativeDriver: false,
       }).start();
     }
-  }, [heroHeight, isSearchFocused]);
+  }, [isSearchFocused]);
 
   useFocusEffect(
     useCallback(() => {
@@ -48,42 +87,80 @@ const Search = ({navigation}) => {
     <Box
       as={SafeAreaView}
       style={styles.SafeAreaView}
-      bg={
-        isSearchFocused ? theme.colors.transparentColor : theme.colors.logoBg
-      }>
-      <Box
-        as={Animated.View}
-        height={heroHeight}
-        style={styles.ImageBackgroundContainer}
+      bg={isSearchFocused ? theme.colors.logoBgLight : theme.colors.logoBg}>
+      <Animated.View
+        // height={heroHeight}
+        style={[styles.ImageBackgroundContainer, {height: heroHeight}]}
         // height={isSearchFocused ? 35 : 285}
         backgroundColor={
           isSearchFocused ? theme.colors.transparentColor : theme.colors.logoBg
         }>
-        {!isSearchFocused && (
-          <Box as={ImageBackground} source={bg} style={styles.ImageBackground}>
-            <Box style={styles.logoContainer}>
-              <Logo style={styles.logo} />
-            </Box>
-          </Box>
-        )}
-        <Box style={styles.SearchBox} marginTop={isSearchFocused ? 0 : -42}>
-          <SearchBox onChangeFocus={status => setSearchFocused(status)} />
-        </Box>
-      </Box>
+        {/* IMAGE BACKGROUND  */}
+        <Animated.View style={{opacity: bgOpacity}}>
+          <ImageBackground source={bg} style={styles.ImageBackground}>
+            <Logo style={styles.logo} />
+          </ImageBackground>
+        </Animated.View>
+
+        {/* SEARCH  */}
+        {/* <Box style={styles.SearchBox} marginTop={isSearchFocused ? 0 : -42}> */}
+        <SearchBox
+          marginTop={isSearchFocused ? 0 : -42}
+          onChangeFocus={status => setSearchFocused(status)}
+        />
+        {/* </Box> */}
+      </Animated.View>
+
       <Box style={styles.midContainer} pt={isSearchFocused ? 0 : 26}>
         {isSearchFocused ? (
           <Box style={styles.container}>
-            <Button
-              title="See Last Search"
-              onPress={() => navigation.navigate('Details')}
-            />
+            <Text>History Search</Text>
           </Box>
         ) : (
           <Box style={styles.container}>
-            <Button
-              title="Go to Details"
-              onPress={() => navigation.navigate('Details')}
-            />
+            {/* <FlatList
+              data={DATA}
+              renderItem={({item}) => (
+                <Box py={5}>
+                  <CardContainer>
+                    <CardTitle>{item.title}</CardTitle>
+                    <CardSummary>{item.summary} </CardSummary>
+                  </CardContainer>
+                </Box>
+              )}
+              keyExtractor={item => item.id}
+            /> */}
+            <Box>
+              <Text
+                style={[
+                  GeneralStyles.fontRegular,
+                  {color: theme.colors.textLight},
+                ]}>
+                {' '}
+                Bir Deyim{' '}
+              </Text>
+              <CardContainer onPress={() => navigation.navigate('Details')}>
+                <CardTitle>on para</CardTitle>
+                <CardSummary>çok az (para) </CardSummary>
+              </CardContainer>
+            </Box>
+
+            <Box mt={40}>
+              <Text
+                style={[
+                  GeneralStyles.fontRegular,
+                  {color: theme.colors.textLight},
+                ]}>
+                {' '}
+                Bir Deyim - Atasözü{' '}
+              </Text>
+              <CardContainer onPress={() => navigation.navigate('Details')}>
+                <CardTitle>siyem siyem ağlamak</CardTitle>
+                <CardSummary>
+                  hafif hafif, ince ince, durmadan gözyaşı dökmek{' '}
+                </CardSummary>
+              </CardContainer>
+            </Box>
           </Box>
         )}
       </Box>
@@ -104,10 +181,13 @@ const styles = StyleSheet.create({
   },
 
   ImageBackground: {
-    flex: 1,
+    // flex: 1,
     zIndex: 1,
     width: '100%',
     height: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   logoContainer: {
@@ -117,6 +197,9 @@ const styles = StyleSheet.create({
   },
 
   logo: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 120,
     height: 150,
     color: theme.colors.logoColor,
@@ -144,7 +227,9 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    padding: 30,
+    paddingVertical: 40,
+    paddingHorizontal: 16,
+    top: 35,
   },
 });
 

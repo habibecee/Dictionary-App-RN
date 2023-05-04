@@ -148,7 +148,10 @@ const Search = ({navigation}) => {
                 {' '}
                 Bir Deyim{' '}
               </Text>
-              <CardContainer onPress={() => navigation.navigate('Details')}>
+              <CardContainer
+                onPress={() =>
+                  navigation.navigate('Details', {title: 'On para'})
+                }>
                 <CardTitle>on para</CardTitle>
                 <CardSummary>çok az (para) </CardSummary>
               </CardContainer>
@@ -163,7 +166,10 @@ const Search = ({navigation}) => {
                 {' '}
                 Bir Deyim - Atasözü{' '}
               </Text>
-              <CardContainer onPress={() => navigation.navigate('Details')}>
+              <CardContainer
+                onPress={() =>
+                  navigation.navigate('Details', {title: 'Siyem siyem ağlamak'})
+                }>
                 <CardTitle>siyem siyem ağlamak</CardTitle>
                 <CardSummary>
                   hafif hafif, ince ince, durmadan gözyaşı dökmek{' '}

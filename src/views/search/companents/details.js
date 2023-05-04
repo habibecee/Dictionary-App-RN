@@ -14,7 +14,7 @@ const Details = () => {
 
   return (
     <Box as={SafeAreaView} style={styles.Container}>
-      <Text>Details !</Text>
+      <Text>Details!</Text>
     </Box>
   );
 };

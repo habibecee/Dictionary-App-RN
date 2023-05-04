@@ -68,6 +68,13 @@ const SearchBox = ({onChangeFocus}) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
+    left: 0,
+    bottom: 0,
+    zIndex: 1,
+    width: '100%',
+    height: 52,
+    padding: 16,
     flexDirektion: 'row',
     justifyContent: 'center',
   },

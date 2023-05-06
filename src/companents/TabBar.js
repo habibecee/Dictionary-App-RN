@@ -9,7 +9,7 @@ import {
 import Button from './Button';
 import Box from './Box';
 import theme from '../utils/theme';
-import {SearchIcon} from './icons';
+import {Home, SearchIcon, Star, StarSolid} from './icons';
 import {AnchorIcon} from './icons';
 import {BookmarkIcon} from './icons';
 
@@ -49,7 +49,7 @@ function TabBar({state, descriptors, navigation}) {
               bg={theme.colors.logoColor}
               borderRadius="full"
               onPress={onPress}>
-              <SearchIcon stroke="white" />
+              <Home stroke="white" />
             </Button>
           </Box>
         ) : (
@@ -60,23 +60,30 @@ function TabBar({state, descriptors, navigation}) {
             onPress={onPress}
             flex={1}>
             {label === 'History' && (
-              <AnchorIcon
-                color={isFocused ? theme.colors.red : theme.colors.gray}
-              />
+              <AnchorIcon color={isFocused ? '#BE6DB7' : theme.colors.gray} />
             )}
             {label === 'Favorite' && (
-              <BookmarkIcon
-                color={isFocused ? theme.colors.red : theme.colors.gray}
-              />
+              <React.Fragment>
+                {isFocused ? (
+                  <StarSolid color="#FFD93D" />
+                ) : (
+                  <Star color="#FFD93D" />
+                )}
+              </React.Fragment>
             )}
-
             {/* INDICATOR */}
-            <Box
-              size={4}
-              bg={isFocused ? theme.colors.red : theme.colors.transparentColor}
-              mt={6}
-              borderRadius="full"
-            />
+            <React.Fragment>
+              {isFocused && label !== 'Search' ? (
+                <Box
+                  size={4}
+                  bg={label === 'Favorite' ? '#FFD93D' : '#BE6DB7'}
+                  mt={6}
+                  borderRadius="full"
+                />
+              ) : (
+                <React.Fragment></React.Fragment>
+              )}
+            </React.Fragment>
           </Button>
         );
       })}

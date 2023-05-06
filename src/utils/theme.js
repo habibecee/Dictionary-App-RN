@@ -1,6 +1,10 @@
 import React from 'react';
 const space = [];
 
+const sizes = {
+  actionButton: 48,
+};
+
 const colors = {
   gray: '#758291',
   red: '#E11E3C',
@@ -16,11 +20,13 @@ const colors = {
   textMedium: '#48515B',
   textLight: '#758291',
   cardBorderColor: '#E3E5E8',
+  subWord: '#EB455F',
+  subText: '#B04759',
+
+  inputFocusColor: '#D1D1D1',
+  transparentColor: '#00000000',
 
   logoColor: '#B47F6F',
-  inputFocusColor: '#D1D1D1',
-
-  transparentColor: '#00000000',
   logoBg: '#fdf1ef',
   logoBgLight: '#fdf3f2',
   // logoBgLight: '#fdefed',
@@ -31,4 +37,4 @@ const radii = {
   full: 9999,
 };
 
-export default {space, radii, colors};
+export default {space, radii, colors, sizes};

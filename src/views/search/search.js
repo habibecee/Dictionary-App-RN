@@ -1,27 +1,12 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Animated,
-  FlatList,
-  ImageBackground,
-  ActivityIndicator,
-} from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
-
-import theme from '../../utils/theme';
-
+import {Platform, StatusBar, StyleSheet} from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 import Box from '../../companents/Box';
-import Text from '../../companents/Text';
-import {Logo} from '../../companents/icons';
-import bg from '../../assets/images/dictionary.png';
-import SearchBox from '../../companents/SearchBox';
-import Bg from '../../companents/Bg';
-import {CardSummary, CardTitle, CardContainer} from '../../companents/Card';
-import {GeneralStyles, fonts} from '../../utils/constants';
-import {SimpleCard, SimpleCardTitle} from '../../companents/SimpleCard';
+import SuggestionCard from '../../companents/SuggestionCard';
+import LastHistoryList from '../../companents/LastHistoryList';
+import HomeSearch from '../../companents/HomeSearch';
+import theme from '../../utils/theme';
 
 const DATA = [
   {
@@ -42,53 +27,18 @@ const DATA = [
 ];
 
 const Search = ({navigation}) => {
-  const heroHeight = new Animated.Value(285);
-  const bgOpacity = new Animated.Value(1);
   const [isSearchFocused, setSearchFocused] = useState(false);
   const [homeData, setHomeData] = useState(null);
 
   const getHomeData = async () => {
     const response = await fetch('https://sozluk.gov.tr/icerik');
     const data = await response.json();
-    // console.log(data);
     setHomeData(data);
   };
 
   useEffect(() => {
     getHomeData();
   }, []);
-
-  useEffect(() => {
-    if (isSearchFocused) {
-      // bgOpacity
-      Animated.timing(bgOpacity, {
-        toValue: 0,
-        duration: 500,
-        useNativeDriver: false,
-      }).start();
-
-      // heroHeight
-      Animated.timing(heroHeight, {
-        toValue: 10,
-        duration: 500,
-        useNativeDriver: false,
-      }).start();
-    } else {
-      // bgOpacity
-      Animated.timing(bgOpacity, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: false,
-      }).start();
-
-      // heroHeight
-      Animated.timing(heroHeight, {
-        toValue: 285,
-        duration: 500,
-        useNativeDriver: false,
-      }).start();
-    }
-  }, [isSearchFocused]);
 
   useFocusEffect(
     useCallback(() => {
@@ -102,101 +52,38 @@ const Search = ({navigation}) => {
       as={SafeAreaView}
       style={styles.SafeAreaView}
       bg={isSearchFocused ? theme.colors.logoBgLight : theme.colors.logoBg}>
-      <Animated.View
-        // height={heroHeight}
-        style={[styles.ImageBackgroundContainer, {height: heroHeight}]}
-        // height={isSearchFocused ? 35 : 285}
-        backgroundColor={
-          isSearchFocused ? theme.colors.transparentColor : theme.colors.logoBg
-        }>
-        {/* IMAGE BACKGROUND  */}
-        <Animated.View style={{opacity: bgOpacity}}>
-          <ImageBackground source={bg} style={styles.ImageBackground}>
-            <Logo style={styles.logo} />
-          </ImageBackground>
-        </Animated.View>
-
-        {/* SEARCH  */}
-        {/* <Box style={styles.SearchBox} marginTop={isSearchFocused ? 0 : -42}> */}
-        <SearchBox
-          marginTop={isSearchFocused ? 0 : -42}
-          onChangeFocus={status => setSearchFocused(status)}
-        />
-        {/* </Box> */}
-      </Animated.View>
+      <HomeSearch
+        isSearchFocused={isSearchFocused}
+        onSearchFocused={setSearchFocused}
+      />
 
       <Box style={styles.midContainer} pt={isSearchFocused ? 0 : 26}>
         {isSearchFocused ? (
           <Box style={styles.container}>
-            <FlatList
-              style={{padding: 6}}
-              data={DATA}
-              renderItem={({item}) => (
-                <Box py={6}>
-                  <SimpleCard>
-                    <SimpleCardTitle> {item.title} </SimpleCardTitle>
-                  </SimpleCard>
-                </Box>
-              )}
-              keyExtractor={item => item.id}
-              ListHeaderComponent={
-                <Text
-                  style={[
-                    GeneralStyles.fontRegular,
-                    {color: theme.colors.textMedium, marginBottom: 10},
-                  ]}>
-                  Last Searches
-                </Text>
-              }
-            />
+            <LastHistoryList data={DATA} />
           </Box>
         ) : (
           <Box style={styles.container}>
-            <Box>
-              <Text
-                style={[
-                  GeneralStyles.fontRegular,
-                  {color: theme.colors.textLight},
-                ]}>
-                Bir Kelime
-              </Text>
-              <CardContainer
-                onPress={() =>
-                  navigation.navigate('Details', {title: 'On para'})
-                }>
-                {homeData ? (
-                  <>
-                    <CardTitle>{homeData?.kelime[0].madde} </CardTitle>
-                    <CardSummary>{homeData?.kelime[0].anlam}</CardSummary>
-                  </>
-                ) : (
-                  <ActivityIndicator />
-                )}
-              </CardContainer>
-            </Box>
+            <SuggestionCard
+              data={homeData?.kelime[0]}
+              onPress={() =>
+                navigation.navigate('Details', {
+                  title: homeData?.kelime[0].madde,
+                })
+              }
+              title="Bir Kelime"
+            />
 
-            <Box mt={40}>
-              <Text
-                style={[
-                  GeneralStyles.fontRegular,
-                  {color: theme.colors.textLight},
-                ]}>
-                Bir Deyim - Atasözü
-              </Text>
-              <CardContainer
-                onPress={() =>
-                  navigation.navigate('Details', {title: 'Siyem siyem ağlamak'})
-                }>
-                {homeData ? (
-                  <>
-                    <CardTitle>{homeData?.atasoz[0].madde}</CardTitle>
-                    <CardSummary>{homeData?.atasoz[0].madde}</CardSummary>
-                  </>
-                ) : (
-                  <ActivityIndicator />
-                )}
-              </CardContainer>
-            </Box>
+            <SuggestionCard
+              mt={40}
+              data={homeData?.atasoz[0]}
+              onPress={() =>
+                navigation.navigate('Details', {
+                  title: homeData?.atasoz[0].madde,
+                })
+              }
+              title="Bir Deyim - Atasözü"
+            />
           </Box>
         )}
       </Box>

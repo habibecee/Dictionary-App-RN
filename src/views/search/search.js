@@ -6,6 +6,7 @@ import {
   Animated,
   FlatList,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import {useFocusEffect} from '@react-navigation/native';
@@ -44,6 +45,18 @@ const Search = ({navigation}) => {
   const heroHeight = new Animated.Value(285);
   const bgOpacity = new Animated.Value(1);
   const [isSearchFocused, setSearchFocused] = useState(false);
+  const [homeData, setHomeData] = useState(null);
+
+  const getHomeData = async () => {
+    const response = await fetch('https://sozluk.gov.tr/icerik');
+    const data = await response.json();
+    // console.log(data);
+    setHomeData(data);
+  };
+
+  useEffect(() => {
+    getHomeData();
+  }, []);
 
   useEffect(() => {
     if (isSearchFocused) {
@@ -145,15 +158,20 @@ const Search = ({navigation}) => {
                   GeneralStyles.fontRegular,
                   {color: theme.colors.textLight},
                 ]}>
-                {' '}
-                Bir Deyim{' '}
+                Bir Kelime
               </Text>
               <CardContainer
                 onPress={() =>
                   navigation.navigate('Details', {title: 'On para'})
                 }>
-                <CardTitle>on para</CardTitle>
-                <CardSummary>çok az (para) </CardSummary>
+                {homeData ? (
+                  <>
+                    <CardTitle>{homeData?.kelime[0].madde} </CardTitle>
+                    <CardSummary>{homeData?.kelime[0].anlam}</CardSummary>
+                  </>
+                ) : (
+                  <ActivityIndicator />
+                )}
               </CardContainer>
             </Box>
 
@@ -163,17 +181,20 @@ const Search = ({navigation}) => {
                   GeneralStyles.fontRegular,
                   {color: theme.colors.textLight},
                 ]}>
-                {' '}
-                Bir Deyim - Atasözü{' '}
+                Bir Deyim - Atasözü
               </Text>
               <CardContainer
                 onPress={() =>
                   navigation.navigate('Details', {title: 'Siyem siyem ağlamak'})
                 }>
-                <CardTitle>siyem siyem ağlamak</CardTitle>
-                <CardSummary>
-                  hafif hafif, ince ince, durmadan gözyaşı dökmek{' '}
-                </CardSummary>
+                {homeData ? (
+                  <>
+                    <CardTitle>{homeData?.atasoz[0].madde}</CardTitle>
+                    <CardSummary>{homeData?.atasoz[0].madde}</CardSummary>
+                  </>
+                ) : (
+                  <ActivityIndicator />
+                )}
               </CardContainer>
             </Box>
           </Box>

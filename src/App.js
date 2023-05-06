@@ -42,7 +42,7 @@ function SearchStackView() {
               shadowColor: theme.colors.transparentColor,
             },
             headerTitleStyle: {
-              color: theme.colors.logoColor,
+              color: theme.colors.subWord,
               fontFamily: fonts.bold,
               fontSize: 20,
             },

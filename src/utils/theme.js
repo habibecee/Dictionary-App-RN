@@ -20,11 +20,13 @@ const colors = {
   textMedium: '#48515B',
   textLight: '#758291',
   cardBorderColor: '#E3E5E8',
+  subWord: '#EB455F',
+  subText: '#B04759',
+
+  inputFocusColor: '#D1D1D1',
+  transparentColor: '#00000000',
 
   logoColor: '#B47F6F',
-  inputFocusColor: '#D1D1D1',
-
-  transparentColor: '#00000000',
   logoBg: '#fdf1ef',
   logoBgLight: '#fdf3f2',
   // logoBgLight: '#fdefed',

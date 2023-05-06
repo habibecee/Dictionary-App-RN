@@ -1,7 +1,6 @@
 import React from 'react';
-import {Platform, StatusBar, StyleSheet} from 'react-native';
+import {Platform, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import Box from '../../../companents/Box';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 import theme from '../../../utils/theme';
 import Text from '../../../companents/Text';
@@ -11,10 +10,14 @@ import {
   Favorite,
   FavoriteSolid,
   Hand,
-  MoreHorizontal,
   Sound,
   SoundSolid,
 } from '../../../companents/icons';
+import {
+  DetailItemContainer,
+  DetailItemSummary,
+  DetailItemTitle,
+} from '../../../companents/DetailSummaryItem';
 
 const Details = () => {
   useFocusEffect(
@@ -49,6 +52,36 @@ const Details = () => {
           <ActionTitle> Turkish Sign Language </ActionTitle>
         </ActionButton>
       </Box>
+
+      <Box as={ScrollView} style={styles.ScroolView}>
+        <DetailItemContainer>
+          <DetailItemTitle>
+            Successfully launched the app on the simulator
+          </DetailItemTitle>
+          <DetailItemSummary>
+            Installing info Launching success Successfully launched the app on
+            the simulator
+          </DetailItemSummary>
+        </DetailItemContainer>
+        <DetailItemContainer border>
+          <DetailItemTitle>
+            Successfully launched the app on the simulator
+          </DetailItemTitle>
+          <DetailItemSummary>
+            Installing info Launching success Successfully launched the app on
+            the simulator
+          </DetailItemSummary>
+        </DetailItemContainer>
+        <DetailItemContainer border>
+          <DetailItemTitle>
+            Successfully launched the app on the simulator
+          </DetailItemTitle>
+          <DetailItemSummary>
+            Installing info Launching success Successfully launched the app on
+            the simulator
+          </DetailItemSummary>
+        </DetailItemContainer>
+      </Box>
     </Box>
   );
 };
@@ -76,6 +109,11 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     flexDirection: 'row',
     marginTop: 24,
+  },
+
+  ScroolView: {
+    marginTop: 32,
+    padding: 8,
   },
 });
 

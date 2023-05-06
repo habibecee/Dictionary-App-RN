@@ -67,7 +67,7 @@ function TabBar({state, descriptors, navigation}) {
                 {isFocused ? (
                   <StarSolid color="#FFD93D" />
                 ) : (
-                  <Star color="#FFD93D" />
+                  <Star color={theme.colors.gray} />
                 )}
               </React.Fragment>
             )}

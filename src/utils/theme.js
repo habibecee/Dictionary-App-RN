@@ -1,6 +1,10 @@
 import React from 'react';
 const space = [];
 
+const sizes = {
+  actionButton: 48,
+};
+
 const colors = {
   gray: '#758291',
   red: '#E11E3C',
@@ -31,4 +35,4 @@ const radii = {
   full: 9999,
 };
 
-export default {space, radii, colors};
+export default {space, radii, colors, sizes};

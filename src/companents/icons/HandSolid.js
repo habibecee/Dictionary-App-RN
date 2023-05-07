@@ -6,6 +6,7 @@ const SvgHandSolid = props => (
     width={24}
     height={24}
     fill="none"
+    viewBox="0 0 32 32"
     className=""
     {...props}>
     <Path

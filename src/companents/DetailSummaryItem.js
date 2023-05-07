@@ -5,14 +5,20 @@ import Text from './Text';
 import {fonts} from '../utils/constants';
 import theme from '../utils/theme';
 
-export const DetailItemContainer = ({children, border, ...props}) => {
+export const DetailItemContainer = ({
+  children,
+  border,
+  order,
+  type,
+  ...props
+}) => {
   return (
     <Box style={styles.Container} {...props} borderTopWidth={border ? 1 : 0}>
       <Box style={styles.SubContainer}>
-        <Text style={styles.SubNumber}> 123 </Text>
+        {order && <Text style={styles.SubNumber}> 123 </Text>}
       </Box>
       <Box style={styles.SubContainer}>
-        <Text style={styles.SubTitle}>ITEM NAME</Text>
+        {type && <Text style={styles.SubTitle}>ITEM NAME</Text>}
       </Box>
       <Box style={styles.SubChild}>{children}</Box>
     </Box>

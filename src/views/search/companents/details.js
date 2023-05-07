@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Platform, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import Box from '../../../companents/Box';
 import {useFocusEffect} from '@react-navigation/native';
@@ -10,6 +10,7 @@ import {
   Favorite,
   FavoriteSolid,
   Hand,
+  HandSolid,
   Sound,
   SoundSolid,
 } from '../../../companents/icons';
@@ -18,8 +19,13 @@ import {
   DetailItemSummary,
   DetailItemTitle,
 } from '../../../companents/DetailSummaryItem';
+import {Loading} from '../../../companents/Loading';
 
-const Details = () => {
+const Details = ({route}) => {
+  const [data, setData] = useState(null);
+
+  const title = route.params?.title;
+
   useFocusEffect(
     React.useCallback(() => {
       StatusBar.setBarStyle('dark-content');
@@ -27,34 +33,58 @@ const Details = () => {
     }, []),
   );
 
+  const getDetailData = async () => {
+    const response = await fetch(
+      `https://sozluk.gov.tr/gts?ara=${query.params}`,
+    );
+    const data = await response.json();
+    setData(data);
+  };
+
+  useEffect(() => {
+    getDetailData();
+  }, []);
+
   return (
     <Box style={styles.Container}>
       <Box style={styles.SubContainer}>
-        <Text style={styles.SubTitle}>Details!</Text>
+        <Text style={styles.SubTitle}>{title}</Text>
         <Text style={styles.SubDetail}>Arapça Kalem</Text>
       </Box>
       <Box style={styles.ButtonContainer}>
-        <ActionButton>
+        <ActionButton disabled={!data}>
           <Sound color={theme.colors.textLight} />
         </ActionButton>
-        {/* <ActionButton>
-          <SoundSolid color={theme.colors.textLight} />
+        {/* <ActionButton disabled={!data}>
+          <SoundSolid color={theme.colors.soundIconSolid} />
         </ActionButton> */}
-        {/* <ActionButton ml={12}>
+        <ActionButton ml={12} disabled={!data}>
           <Favorite color={theme.colors.textLight} />
-        </ActionButton> */}
-        <ActionButton ml={12}>
-          <FavoriteSolid color={theme.colors.textLight} />
         </ActionButton>
+        {/* <ActionButton ml={12} disabled={!data}>
+          <FavoriteSolid color={theme.colors.favoriteIconSolid} />
+        </ActionButton> */}
 
-        <ActionButton ml="auto">
+        <ActionButton ml="auto" disabled={!data}>
           <Hand color={theme.colors.textLight} />
+          {/* <HandSolid color={theme.colors.textLight} /> */}
           <ActionTitle> Turkish Sign Language </ActionTitle>
         </ActionButton>
       </Box>
 
       <Box as={ScrollView} style={styles.ScroolView}>
-        <DetailItemContainer>
+        {/* BEFORE LOADING  */}
+
+        {[1, 2, 3].map(index => (
+          <DetailItemContainer border={index !== 1}>
+            <Loading />
+            <Loading width={200} marginTop={10} />
+          </DetailItemContainer>
+        ))}
+
+        {/* AFTER LOADING  */}
+
+        {/* <DetailItemContainer border>
           <DetailItemTitle>
             Successfully launched the app on the simulator
           </DetailItemTitle>
@@ -62,25 +92,7 @@ const Details = () => {
             Installing info Launching success Successfully launched the app on
             the simulator
           </DetailItemSummary>
-        </DetailItemContainer>
-        <DetailItemContainer border>
-          <DetailItemTitle>
-            Successfully launched the app on the simulator
-          </DetailItemTitle>
-          <DetailItemSummary>
-            Installing info Launching success Successfully launched the app on
-            the simulator
-          </DetailItemSummary>
-        </DetailItemContainer>
-        <DetailItemContainer border>
-          <DetailItemTitle>
-            Successfully launched the app on the simulator
-          </DetailItemTitle>
-          <DetailItemSummary>
-            Installing info Launching success Successfully launched the app on
-            the simulator
-          </DetailItemSummary>
-        </DetailItemContainer>
+        </DetailItemContainer> */}
       </Box>
     </Box>
   );

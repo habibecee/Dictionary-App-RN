@@ -33,6 +33,7 @@ const Search = ({navigation}) => {
   const getHomeData = async () => {
     const response = await fetch('https://sozluk.gov.tr/icerik');
     const data = await response.json();
+    console.log(data);
     setHomeData(data);
   };
 
@@ -68,7 +69,7 @@ const Search = ({navigation}) => {
               data={homeData?.kelime[0]}
               onPress={() =>
                 navigation.navigate('Details', {
-                  title: homeData?.kelime[0].madde,
+                  keyword: homeData?.kelime[0].madde,
                 })
               }
               title="Bir Kelime"
@@ -79,7 +80,7 @@ const Search = ({navigation}) => {
               data={homeData?.atasoz[0]}
               onPress={() =>
                 navigation.navigate('Details', {
-                  title: homeData?.atasoz[0].madde,
+                  keyword: homeData?.atasoz[0].madde,
                 })
               }
               title="Bir Deyim - Atasözü"

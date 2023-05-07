@@ -25,6 +25,9 @@ const colors = {
 
   inputFocusColor: '#D1D1D1',
   transparentColor: '#00000000',
+  favoriteIconSolid: '#E76161',
+  soundIconSolid: '#87CBB9',
+  handIconSolid: '#567189',
 
   logoColor: '#B47F6F',
   logoBg: '#fdf1ef',

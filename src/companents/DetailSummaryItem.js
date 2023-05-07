@@ -5,26 +5,46 @@ import Text from './Text';
 import {fonts} from '../utils/constants';
 import theme from '../utils/theme';
 
-export const DetailItemContainer = ({children, border, ...props}) => {
+const DetailSummaryItem = ({data, key, children, border, ...props}) => {
+  const type = (data?.ozelliklerListe &&
+    data.ozelliklerListe.map(_ => _.tam_adi)) || ['İsim'];
+
   return (
-    <Box style={styles.Container} {...props} borderTopWidth={border ? 1 : 0}>
-      <Box style={styles.SubContainer}>
-        <Text style={styles.SubNumber}> 123 </Text>
-      </Box>
-      <Box style={styles.SubContainer}>
-        <Text style={styles.SubTitle}>ITEM NAME</Text>
-      </Box>
-      <Box style={styles.SubChild}>{children}</Box>
+    <Box
+      style={styles.Container}
+      key={key}
+      {...props}
+      borderTopWidth={border ? 1 : 0}>
+      {data ? (
+        <React.Fragment>
+          <Box style={styles.SubContainer}>
+            <Text style={styles.SubNumber}> {data.anlam_sira} </Text>
+          </Box>
+          <Box style={styles.SubContainer}>
+            <Text style={styles.SubTitle}>{type.join(', ')} </Text>
+          </Box>
+          <Box style={styles.SubChild}>
+            <Text style={styles.Title}>{data.anlam}</Text>
+            {data.orneklerListe &&
+              data.orneklerListe.map(ornek => (
+                <Box key={ornek.ornek_id}>
+                  <Text style={styles.Summary}>
+                    {ornek.ornek}{' '}
+                    {ornek.yazar_id !== '0' && (
+                      <Text style={styles.Author}>
+                        {`-${ornek.yazar[0].tam_adi}`}
+                      </Text>
+                    )}
+                  </Text>
+                </Box>
+              ))}
+          </Box>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>{children}</React.Fragment>
+      )}
     </Box>
   );
-};
-
-export const DetailItemTitle = ({children, ...props}) => {
-  return <Text style={styles.Title}>{children}</Text>;
-};
-
-export const DetailItemSummary = ({children, ...props}) => {
-  return <Text style={styles.Summary}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -91,4 +111,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 12,
   },
+
+  Author: {
+    fontFamily: fonts.bold,
+    color: theme.colors.textLight,
+  },
 });
+
+export default DetailSummaryItem;

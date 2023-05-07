@@ -14,17 +14,24 @@ import {
   Sound,
   SoundSolid,
 } from '../../../companents/icons';
-import {
-  DetailItemContainer,
-  DetailItemSummary,
-  DetailItemTitle,
-} from '../../../companents/DetailSummaryItem';
+import DetailSummaryItem from '../../../companents/DetailSummaryItem';
 import {Loading} from '../../../companents/Loading';
 
 const Details = ({route}) => {
   const [data, setData] = useState(null);
 
-  const title = route.params?.title;
+  const keyword = route.params?.keyword;
+  // const keyword = 'milliyet';
+
+  const getDetailData = async () => {
+    const response = await fetch(`https://sozluk.gov.tr/gts?ara=${keyword}`);
+    const data = await response.json();
+    setData(data[0]);
+  };
+
+  useEffect(() => {
+    getDetailData();
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,23 +40,15 @@ const Details = ({route}) => {
     }, []),
   );
 
-  const getDetailData = async () => {
-    const response = await fetch(
-      `https://sozluk.gov.tr/gts?ara=${query.params}`,
-    );
-    const data = await response.json();
-    setData(data);
-  };
-
-  useEffect(() => {
-    getDetailData();
-  }, []);
-
   return (
     <Box style={styles.Container}>
       <Box style={styles.SubContainer}>
-        <Text style={styles.SubTitle}>{title}</Text>
-        <Text style={styles.SubDetail}>Arapça Kalem</Text>
+        <Text style={styles.SubTitle}>{keyword}</Text>
+        {data?.telaffuz || data?.lisan ? (
+          <Text style={styles.SubDetail}>
+            {data?.telaffuz && data?.telaffuz} {data?.lisan}
+          </Text>
+        ) : null}
       </Box>
       <Box style={styles.ButtonContainer}>
         <ActionButton disabled={!data}>
@@ -75,24 +74,20 @@ const Details = ({route}) => {
       <Box as={ScrollView} style={styles.ScroolView}>
         {/* BEFORE LOADING  */}
 
-        {[1, 2, 3].map(index => (
-          <DetailItemContainer border={index !== 1}>
-            <Loading />
-            <Loading width={200} marginTop={10} />
-          </DetailItemContainer>
-        ))}
-
-        {/* AFTER LOADING  */}
-
-        {/* <DetailItemContainer border>
-          <DetailItemTitle>
-            Successfully launched the app on the simulator
-          </DetailItemTitle>
-          <DetailItemSummary>
-            Installing info Launching success Successfully launched the app on
-            the simulator
-          </DetailItemSummary>
-        </DetailItemContainer> */}
+        {data
+          ? data.anlamlarListe.map(item => (
+              <DetailSummaryItem
+                key={item.anlam_sira}
+                data={item}
+                border={item.anlam_sira !== '1'}
+              />
+            ))
+          : [1, 2, 3].map(index => (
+              <DetailSummaryItem key={index} border={index !== 1}>
+                <Loading />
+                <Loading width={200} mt={10} />
+              </DetailSummaryItem>
+            ))}
       </Box>
     </Box>
   );
@@ -125,7 +120,7 @@ const styles = StyleSheet.create({
 
   ScroolView: {
     marginTop: 32,
-    padding: 8,
+    // padding: 8,
   },
 });
 

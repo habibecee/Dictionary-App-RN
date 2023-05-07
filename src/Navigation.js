@@ -34,7 +34,7 @@ function SearchStackView() {
         component={Details}
         options={({route, navigation}) => {
           return {
-            title: route.params?.title,
+            title: route.params?.keyword,
             headerStyle: {
               backgroundColor: theme.colors.logoBg,
               shadowColor: theme.colors.transparentColor,

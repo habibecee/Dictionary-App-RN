@@ -29,7 +29,7 @@ Please stay tuned for more 😉 </h5> </br>
 
 <h3> APP VIEW </h3> </br>
 
-<img src="./assets/screen.gif" alt="Gif" width="400" height="auto"> </br>
+<img src="./assets/screen.gif" alt="Gif" width="300" height="auto"> </br>
 
 <!-- ![](./assets/screen.gif) </br> -->
 

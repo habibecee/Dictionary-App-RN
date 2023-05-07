@@ -29,7 +29,9 @@ Please stay tuned for more 😉 </h5> </br>
 
 <h3> APP VIEW </h3> </br>
 
-![](./assets/screen.gif) </br>
+<img src="./assets/screen.gif" alt="Gif" width="400" height="auto"> </br>
+
+<!-- ![](./assets/screen.gif) </br> -->
 
 |<img src="./assets/scr1.png" width="200"> |<img src="./assets/scr2.png" width="200"> |
 

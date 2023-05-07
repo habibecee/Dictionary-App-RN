@@ -33,9 +33,7 @@ Please stay tuned for more 😉 </h5> </br>
 
 <!-- ![](./assets/screen.gif) </br> -->
 
-|<img src="./assets/scr1.png" width="200"> |<img src="./assets/scr2.png" width="200"> |
-
-|<img src="./assets/scr3.png" width="200">|
+|<img src="./assets/scr1.png" width="180" height="auto"> |<img src="./assets/scr2.png" width="180" height="auto"> | <img src="./assets/scr3.png" width="180" height="auto">|
 
  <!--<img src="./assets/scr4.png" width="200">|
 
